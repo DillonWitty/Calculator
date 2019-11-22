@@ -1,0 +1,186 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+    
+</head>
+    
+ <body>
+     <h2>Calculator</h2>
+     <div id="calc">
+        <div class="row">
+        <div class="col" id="display">0</div>
+         </div>
+        <div class="row">
+            <div class="btn col" id="AC">AC</div>
+            <div class="btn col" id="back">Bksp</div>
+            <div class="btn btn-op col" id="divid">/</div>
+         </div> 
+
+        <div class="row"> 
+            <div class="btn num-btn col" id="seven">7</div>
+            <div class="btn num-btn col" id="eight">8</div>
+            <div class="btn num-btn col" id="nine">9</div>
+            <div class="btn btn-op col" id="x">*</div>
+        </div>
+        <div class="row"> 
+            <div class="btn num-btn col" id="four">4</div>
+            <div class="btn num-btn col" id="five">5</div>
+            <div class="btn num-btn col" id="six">6</div>
+            <div class="btn btn-op col" id="sub">-</div>
+        </div>
+        <div class="row">
+            <div class="btn num-btn col" id="one">1</div>
+            <div class="btn num-btn col" id="two">2</div>
+            <div class="btn num-btn col" id="three">3</div>
+            <div class="btn btn-op col" id="add">+</div>
+         </div>
+        <div class="row"> 
+            <div class="btn num-btn col" id="zero">0</div>
+            <div class="btn col" id="dot">.</div>
+            <div class="btn btn-op col" id="equals">=</div>
+        </div>
+     </div>
+     <script>
+         var oneBt = document.getElementById('one');
+         var twoBt = document.getElementById('two');
+         var threeBt = document.getElementById('three');
+         var fourBt = document.getElementById('four');
+         var fiveBt = document.getElementById('five');
+         var sixBt = document.getElementById('six');
+         var sevenBt = document.getElementById('seven');
+         var eightBt = document.getElementById('eight');
+         var nineBt = document.getElementById('nine');
+         var zeroBt = document.getElementById('zero');
+         
+         var acBt = document.getElementById('AC');
+         var backBt = document.getElementById('back');
+         var dividBt = document.getElementById('divid');
+         var xBt = document.getElementById('x');
+         var subBt = document.getElementById('sub');
+         var addBt = document.getElementById('add');
+         var dotBt = document.getElementById('dot');
+         var eqBt = document.getElementById('equals');
+         var displayEle = document.getElementById('display');
+         
+         var numBtn = document.getElementsByClassName('num-btn');
+         var btnOp = document.getElementsByClassName('btn-op');
+         
+         var displayVal = '0';
+         var pendVal;
+         var preVal;
+         var evalStringArray = [];
+         
+         var updateDisplayVal = (clickObj) => {
+         var btnText = clickObj.target.innerText;
+             
+         if(displayVal == '0')
+             displayVal = '';
+                 
+         displayVal += btnText;
+         displayEle.innerText = displayVal;
+             
+         }
+         
+         var performOperation = (clickObj) => {
+             var operator = clickObj.target.innerText;
+             
+             switch(operator){
+                     case'+':
+                        pendingVal = displayVal;
+                        displayVal = '0';
+                        displayEle.innerText = displayVal;
+                        evalStringArray.push(pendingVal);
+                        evalStringArray.push('+');
+                        break;
+                    case'-':
+                        pendingVal = displayVal;
+                        displayVal = '0';
+                        displayEle.innerText = displayVal;
+                        evalStringArray.push(pendingVal);
+                        evalStringArray.push('-');
+                        break;
+                    case'*':
+                        pendingVal = displayVal;
+                        displayVal = '0';
+                        displayEle.innerText = displayVal;
+                        evalStringArray.push(pendingVal);
+                        evalStringArray.push('*');
+                        break;
+                     case'/':
+                        pendingVal = displayVal;
+                        displayVal = '0';
+                        displayEle.innerText = displayVal;
+                        evalStringArray.push(pendingVal);
+                        evalStringArray.push('/');
+                        break;
+                     case'=':
+                        evalStringArray.push(displayVal);
+                        var evalu = eval(evalStringArray.join(' '));
+                        displayVal = evalu + '';
+                        displayEle.innerText = displayVal;
+                        evalStringArray = [];
+                        break;
+                 default:
+                     break;
+             }
+         }
+         
+         for(let i=0;i < numBtn.length; i++ ){
+             numBtn[i].addEventListener('click', updateDisplayVal, false);
+         }
+         for(let i=0;i < btnOp.length; i++ ){
+             btnOp[i].addEventListener('click', performOperation, false);
+         }
+         
+         acBt.onclick = () => {
+             displayVal = '0';
+             preVal = undefined;
+             evalStringArray = [];
+             displayEle.innerHTML = displayVal;
+         }
+         backBt.onclick = () => {
+             let lengthOfDisplayVal = displayVal.length;
+             displayVal = displayVal.slice(0, lengthOfDisplayVal - 1);
+             
+             if(displayVal === '')
+                displayVal = '0';
+             displayEle.innerText = displayVal;
+         }
+         dotBt.onclick = () => {
+             if(!displayVal.includes('.'))
+                 displayVal += '.';
+             displayEle.innerText = displayVal;
+         }
+         
+         
+         
+         dividBt.onclick = () => {
+             if(!displayVal.includes('/'))
+                 displayVal += '/';
+             displayEle.innerText = displayVal;
+         }
+         xBt.onclick = () => {
+             if(!displayVal.includes('x'))
+                 displayVal += 'x';
+             displayEle.innerText = displayVal;
+         }
+         subBt.onclick = () => {
+             if(!displayVal.includes('-'))
+                 displayVal += '-';
+             displayEle.innerText = displayVal;
+         }
+         addBt.onclick = () => {
+             if(!displayVal.includes('+'))
+                 displayVal += '+';
+             displayEle.innerText = displayVal;
+         }
+         
+         
+         
+     
+     </script>
+
+
+
+ </body>
+<html>
